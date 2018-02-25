@@ -5,8 +5,8 @@ import java.util.Random;
 public class Perceptron {
     private float[] weights;
     private float learnRate = 0.2f;
-    private float iterations = 0;
-    private float errors = 0;
+    private int iterations = 0;
+    private int errors = 0;
 
     Perceptron(int numberOfInputs) {
         Random random = new Random();
@@ -41,6 +41,8 @@ public class Perceptron {
             }
         }
 
+        iterations++;
+
         StringBuilder sb = new StringBuilder();
 
         sb.append((int)iterations)
@@ -60,12 +62,11 @@ public class Perceptron {
 
         System.out.println(sb.toString());
 
-        iterations++;
-        return guess;
+          return guess;
     }
 
     public float getErrorPercentage() {
-        return errors * 100 / iterations;
+        return (float)errors * 100f / (float)iterations;
     }
 
     private int sign(float n) {
