@@ -6,7 +6,7 @@ public class Point {
 
     private float x;
     private float y;
-    final float bias = 1;
+    final int bias = 1;
     private int desired;
 
     public float getX() {
@@ -25,6 +25,16 @@ public class Point {
         Random random = new Random();
         x = random.nextFloat() * 2 - 1;
         y = random.nextFloat() * 2 - 1;
+
+//        x = random.nextInt(2);
+//        y = random.nextInt(2);
+
+        desired = (y > f(x)) ? 1 : -1;
+    }
+
+    Point(float x, float y) {
+        this.x = x;
+        this.y = y;
 
         desired = (y > f(x)) ? 1 : -1;
     }
