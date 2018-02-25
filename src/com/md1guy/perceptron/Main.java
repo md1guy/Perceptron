@@ -4,14 +4,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Perceptron perceptron = new Perceptron();
+        Perceptron perceptron = new Perceptron(3);
 
-        Point[] points = new Point[10000];
-
-        for (Point point : points) {
-            point = new Point();
-            perceptron.train(point);
+        for (int i = 0; i < 10000000; i++) {
+            perceptron.train(new Point());
         }
+
         System.out.println("Done, error percentage: " + perceptron.getErrorPercentage() + "%");
     }
 }

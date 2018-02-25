@@ -3,29 +3,19 @@ package com.md1guy.perceptron;
 import java.util.Random;
 
 public class Perceptron {
-    private final Random random = new Random();
-    private float weights[] = new float[2];
-    private float learningRate = 1f;
-    private float bias = 1;
+    private float[] weights;
+    private float learnRate = 0.2f;
     private float iterations = 0;
     private float errors = 0;
 
-    public void setLearningRate(float learningRate) {
-        this.learningRate = learningRate;
-    }
+    Perceptron(int numberOfInputs) {
+        Random random = new Random();
+        weights = new float[numberOfInputs];
 
-    public float getErrorPercentage() {
-        return errors * 100 / iterations;
-    }
-
-    Perceptron() {
         for (int i = 0; i < weights.length; i++) {
+
             weights[i] = random.nextFloat() * 2 - 1;
         }
-    }
-
-    private int sign(float n) {
-        return (n < 0) ? -1 : 1;
     }
 
     public int guess(float[] inputs) {
@@ -38,25 +28,30 @@ public class Perceptron {
         return sign(sum);
     }
 
-    public void train(Point point) {
+    public int train(Point point) {
+        float[] inputs = { point.getX(), point.getY(), point.bias};
+        int guess = guess(inputs);
+        int error = point.getDesired() - guess;
 
-        int error = point.desired - guess(point.coords);
+        if (guess != point.getDesired()) {
+            errors++;
 
-        if(error != 0) errors++;
-
-        iterations++;
+            for (int i = 0; i < weights.length; i++) {
+                weights[i] += learnRate * point.getDesired() * inputs[i];
+            }
+        }
 
         StringBuilder sb = new StringBuilder();
 
         sb.append((int)iterations)
                 .append(". Inputs: {")
-                .append(point.coords[0])
+                .append(point.getX())
                 .append(", ")
-                .append(point.coords[1])
+                .append(point.getY())
                 .append("}; guess: ")
-                .append(guess(point.coords))
+                .append(guess)
                 .append("; desired: ")
-                .append(point.desired)
+                .append(point.getDesired())
                 .append("; error: ")
                 .append(error)
                 .append(" | ")
@@ -65,8 +60,15 @@ public class Perceptron {
 
         System.out.println(sb.toString());
 
-        for (int i = 0; i < weights.length; i++) {
-            weights[i] += error * point.coords[i] * learningRate + bias;
-        }
+        iterations++;
+        return guess;
+    }
+
+    public float getErrorPercentage() {
+        return errors * 100 / iterations;
+    }
+
+    private int sign(float n) {
+        return (n > 0) ? 1 : -1;
     }
 }

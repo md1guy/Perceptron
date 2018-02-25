@@ -4,16 +4,33 @@ import java.util.Random;
 
 public class Point {
 
-    private final Random random = new Random();
+    private float x;
+    private float y;
+    final float bias = 1;
+    private int desired;
 
-    float[] coords = new float[2];
-    int desired;
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public int getDesired() {
+        return desired;
+    }
 
     Point() {
-        for (int i = 0; i < coords.length; i++) {
-            coords[i] = random.nextFloat() * 100;
-        }
+        Random random = new Random();
+        x = random.nextFloat() * 2 - 1;
+        y = random.nextFloat() * 2 - 1;
 
-        desired = (coords[0] >= coords[1]) ? 1 : -1;
+        desired = (y > f(x)) ? 1 : -1;
+    }
+
+    public float f(float x) {
+
+        return x;
     }
 }
