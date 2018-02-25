@@ -6,7 +6,7 @@ public class Main {
 
         Perceptron perceptron = new Perceptron(3);
 
-        for (int i = 0; i < 10000000; i++) {
+        for (int i = 0; i < 1000; i++) {
             perceptron.train(new Point());
         }
 
